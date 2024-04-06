@@ -40,6 +40,16 @@ public class RecipesService {
     }
 
     @Transactional(readOnly = true)
+    public List<RecipesResponseDTO> findByName(String name) {
+        List<Recipes> recipes = repository.findByNameContainsIgnoreCase(name);
+        List<RecipesResponseDTO> responses = mapper.ListEntityToListDto(recipes);
+        responses.forEach(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
+        log.info("Finding all recipes by name and tags");
+
+        return responses;
+    }
+
+    @Transactional(readOnly = true)
     public RecipesResponseDTO findById(UUID id) {
         Recipes recipes = repository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("id:%s not found", id))

@@ -26,6 +26,12 @@ public class RecipesController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<RecipesResponseDTO>> findByName(@RequestParam("name") String name) {
+        List<RecipesResponseDTO> response = service.findByName(name);
+        return ResponseEntity.ok().body(response);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<RecipesResponseDTO> findById(@PathVariable UUID id) {
         RecipesResponseDTO response = service.findById(id);
