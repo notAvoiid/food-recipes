@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -50,7 +49,7 @@ public class RecipesService {
     }
 
     @Transactional(readOnly = true)
-    public RecipesResponseDTO findById(UUID id) {
+    public RecipesResponseDTO findById(String id) {
         Recipes recipes = repository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("id:%s not found", id))
         );

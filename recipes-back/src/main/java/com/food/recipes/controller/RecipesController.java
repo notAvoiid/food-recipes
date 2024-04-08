@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
@@ -33,7 +32,7 @@ public class RecipesController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<RecipesResponseDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<RecipesResponseDTO> findById(@PathVariable String id) {
         RecipesResponseDTO response = service.findById(id);
         return ResponseEntity.ok().body(response);
     }

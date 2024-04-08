@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.List;
-import java.util.UUID;
-
 @Getter @Setter
 public class RecipesResponseDTO extends RepresentationModel<RecipesResponseDTO> {
 
-    private UUID id;
+    private String id;
     private String name;
+    private String title;
+    private String ingredients;
+    private String methodPreparation;
 
 }

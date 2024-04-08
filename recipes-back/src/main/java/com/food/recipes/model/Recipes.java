@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity(name = "recipes")
 @Table()
@@ -20,8 +19,11 @@ public class Recipes extends RepresentationModel<Recipes> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
+    private String title;
     private String name;
+    private String ingredients;
+    private String methodPreparation;
 
     @Override
     public boolean equals(Object o) {
