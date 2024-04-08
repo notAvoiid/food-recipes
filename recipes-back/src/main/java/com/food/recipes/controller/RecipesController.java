@@ -3,6 +3,7 @@ package com.food.recipes.controller;
 import com.food.recipes.model.dto.RecipesRequestDTO;
 import com.food.recipes.model.dto.RecipesResponseDTO;
 import com.food.recipes.service.RecipesService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class RecipesController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipesResponseDTO> save(@RequestBody RecipesRequestDTO request) {
+    public ResponseEntity<RecipesResponseDTO> save(@RequestBody @Valid RecipesRequestDTO request) {
         RecipesResponseDTO response = service.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
