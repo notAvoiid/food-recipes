@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.food</groupId>
-	<artifactId>recipes</artifactId>
+	<artifactId>recipes-back</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recipes-back</name>
 	<description>API for food recipes</description>
