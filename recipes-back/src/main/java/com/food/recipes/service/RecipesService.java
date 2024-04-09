@@ -69,4 +69,40 @@ public class RecipesService {
 
         return response;
     }
+
+    @Transactional
+    public RecipesResponseDTO updateTitle(RecipesRequestDTO requestDTO, String id) {
+        Recipes recipes = repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("id:%s not found!", id))
+        );
+        recipes.setTitle(requestDTO.getTitle());
+        RecipesResponseDTO response = mapper.entityToDto(repository.save(recipes));
+        response.add(linkTo(methodOn(RecipesController.class).findById(response.getId())).withSelfRel());
+
+        return response;
+    }
+
+    @Transactional
+    public RecipesResponseDTO updateIngredients(RecipesRequestDTO requestDTO, String id) {
+        Recipes recipes = repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("id:%s not found!", id))
+        );
+        recipes.setIngredients(requestDTO.getIngredients());
+        RecipesResponseDTO response = mapper.entityToDto(repository.save(recipes));
+        response.add(linkTo(methodOn(RecipesController.class).findById(response.getId())).withSelfRel());
+
+        return response;
+    }
+
+    @Transactional
+    public RecipesResponseDTO updateMethodPreparation(RecipesRequestDTO requestDTO, String id) {
+        Recipes recipes = repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("id:%s not found!", id))
+        );
+        recipes.setMethodPreparation(requestDTO.getMethodPreparation());
+        RecipesResponseDTO response = mapper.entityToDto(repository.save(recipes));
+        response.add(linkTo(methodOn(RecipesController.class).findById(response.getId())).withSelfRel());
+
+        return response;
+    }
 }

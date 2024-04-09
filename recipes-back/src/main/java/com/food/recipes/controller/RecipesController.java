@@ -44,4 +44,22 @@ public class RecipesController {
         RecipesResponseDTO response = service.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @PatchMapping("/title/{id}")
+    public ResponseEntity<RecipesResponseDTO> updateTitle(@RequestBody RecipesRequestDTO request, @PathVariable String id) {
+        RecipesResponseDTO response = service.updateTitle(request, id);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PatchMapping("/ingredients/{id}")
+    public ResponseEntity<RecipesResponseDTO> updateIngredients(@RequestBody RecipesRequestDTO request, @PathVariable String id) {
+        RecipesResponseDTO response = service.updateIngredients(request, id);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PatchMapping("/method/{id}")
+    public ResponseEntity<RecipesResponseDTO> updateMethodPreparation(@RequestBody RecipesRequestDTO request, @PathVariable String id) {
+        RecipesResponseDTO response = service.updateMethodPreparation(request, id);
+        return ResponseEntity.ok().body(response);
+    }
 }
