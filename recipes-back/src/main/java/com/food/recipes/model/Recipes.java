@@ -19,21 +19,22 @@ public class Recipes extends RepresentationModel<Recipes> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "recipes_id")
+    @Column(name = "recipes_id", nullable = false)
     private String id;
 
-    @Column(name = "recipes_title")
+    @Column(name = "recipes_title", nullable = false, length = 30)
     private String title;
 
-    @Column(name = "recipes_name")
+    @Column(name = "recipes_name", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "recipes_ingredients")
+    @Column(name = "recipes_ingredients", nullable = false, length = 25)
     private String ingredients;
 
-    @Column(name = "recipes_method_preparation")
+    @Column(name = "recipes_method_preparation", nullable = false)
     private String methodPreparation;
 
+    @Column(nullable = false)
     private Boolean enabled = true;
 
     @Override

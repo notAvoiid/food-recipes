@@ -9,15 +9,15 @@ import lombok.Setter;
 public class RecipesRequestDTO {
 
     @NotBlank(message = "Name must not be blank!")
-    @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters")
+    @Size(min = 3, max = 30, message = "Must be between 3 and 15 characters")
     private String name;
 
     @NotBlank(message = "Title must not be blank!")
-    @Size(min = 4, max = 20, message = "Must be between 4 and 20 characters")
+    @Size(min = 4, max = 30, message = "Must be between 4 and 20 characters")
     private String title;
 
     @NotBlank(message = "Ingredients must not be blank!")
-    @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters")
+    @Size(min = 3, max = 25, message = "Must be between 3 and 15 characters")
     private String ingredients;
 
     @NotBlank(message = "Method preparation must not be blank!")
