@@ -55,7 +55,7 @@ public class RecipesService {
         );
         RecipesResponseDTO response = mapper.entityToDto(recipes);
         response.add(linkTo(methodOn(RecipesController.class).findAll()).withSelfRel());
-        log.info("Finding a recipe by his id:" + id);
+        log.info("Finding a recipe by his id:{}", id);
 
         return response;
     }
@@ -104,5 +104,16 @@ public class RecipesService {
         response.add(linkTo(methodOn(RecipesController.class).findById(response.getId())).withSelfRel());
 
         return response;
+    }
+
+    @Transactional
+    public void disableRecipe(String id) {
+        Recipes recipes = repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("id:%s not found!", id))
+        );
+        repository.disableRecipe(id);
+        RecipesResponseDTO response = mapper.entityToDto(recipes);
+        response.add(linkTo(methodOn(RecipesController.class).findById(id)).withSelfRel());
+        log.warn("Disabling id:{}", id);
     }
 }

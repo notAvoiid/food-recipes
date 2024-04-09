@@ -34,6 +34,8 @@ public class Recipes extends RepresentationModel<Recipes> {
     @Column(name = "recipes_method_preparation")
     private String methodPreparation;
 
+    private Boolean enabled = true;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -12,5 +12,6 @@ public class RecipesResponseDTO extends RepresentationModel<RecipesResponseDTO> 
     private String title;
     private String ingredients;
     private String methodPreparation;
+    private Boolean enabled;
 
 }

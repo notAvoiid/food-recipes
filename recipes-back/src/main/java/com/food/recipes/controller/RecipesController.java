@@ -62,4 +62,10 @@ public class RecipesController {
         RecipesResponseDTO response = service.updateMethodPreparation(request, id);
         return ResponseEntity.ok().body(response);
     }
+
+    @PatchMapping("/disable/{id}")
+    public ResponseEntity<?> disableRecipe(@PathVariable String id) {
+        service.disableRecipe(id);
+        return ResponseEntity.noContent().build();
+    }
 }
