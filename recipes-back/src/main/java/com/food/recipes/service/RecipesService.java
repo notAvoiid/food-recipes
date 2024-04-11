@@ -8,10 +8,14 @@ import com.food.recipes.model.dto.RecipesRequestDTO;
 import com.food.recipes.model.dto.RecipesResponseDTO;
 import com.food.recipes.repository.RecipesRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -23,29 +27,49 @@ public class RecipesService {
     private final RecipesRepository repository;
     private final RecipesMapper mapper;
 
+    @Autowired
+    private PagedResourcesAssembler<RecipesResponseDTO> assembler;
+
+
     public RecipesService(RecipesRepository repository, RecipesMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     @Transactional(readOnly = true)
-    public List<RecipesResponseDTO> findAll() {
-        List<Recipes> recipes = repository.findAll();
-        List<RecipesResponseDTO> responses = mapper.ListEntityToListDto(recipes);
-        responses.forEach(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
+    public PagedModel<EntityModel<RecipesResponseDTO>> findAll(Pageable pageable) {
+
+        var recipesPages = repository.findAll(pageable);
+        var recipesDTOPages = recipesPages.map(mapper::entityToDto);
+        recipesDTOPages.map(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
+
+        Link link = linkTo(methodOn(RecipesController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "ASC"
+        )).withSelfRel();
+
         log.info("Finding all recipes");
 
-        return responses;
+        return assembler.toModel(recipesDTOPages, link);
     }
 
     @Transactional(readOnly = true)
-    public List<RecipesResponseDTO> findByName(String name) {
-        List<Recipes> recipes = repository.findByNameContainsIgnoreCase(name);
-        List<RecipesResponseDTO> responses = mapper.ListEntityToListDto(recipes);
-        responses.forEach(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
+    public PagedModel<EntityModel<RecipesResponseDTO>> findByName(String name, Pageable pageable) {
+
+        var recipesNamePages = repository.findByNameContainsIgnoreCase(name, pageable);
+        var recipesDTOPages = recipesNamePages.map(mapper::entityToDto);
+        recipesDTOPages.map(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
+
+        Link link = linkTo(methodOn(RecipesController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "ASC"
+        )).withSelfRel();
+
         log.info("Finding all recipes by name and tags");
 
-        return responses;
+        return assembler.toModel(recipesDTOPages, link);
     }
 
     @Transactional(readOnly = true)
@@ -54,7 +78,7 @@ public class RecipesService {
                 () -> new EntityNotFoundException(String.format("id:%s not found", id))
         );
         RecipesResponseDTO response = mapper.entityToDto(recipes);
-        response.add(linkTo(methodOn(RecipesController.class).findAll()).withSelfRel());
+        response.add(linkTo(methodOn(RecipesController.class).findById(id)).withSelfRel());
         log.info("Finding a recipe by his id:{}", id);
 
         return response;
