@@ -25,9 +25,6 @@ public class Recipes extends RepresentationModel<Recipes> {
     @Column(name = "recipes_title", nullable = false, length = 30)
     private String title;
 
-    @Column(name = "recipes_name", nullable = false, length = 30)
-    private String name;
-
     @Column(name = "recipes_ingredients", nullable = false, length = 25)
     private String ingredients;
 

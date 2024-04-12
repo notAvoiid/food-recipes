@@ -8,7 +8,6 @@ import org.springframework.hateoas.RepresentationModel;
 public class RecipesResponseDTO extends RepresentationModel<RecipesResponseDTO> {
 
     private String id;
-    private String name;
     private String title;
     private String ingredients;
     private String methodPreparation;
