@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RecipesRepository extends JpaRepository<Recipes, String> {
 
-    Page<Recipes> findByNameContainsIgnoreCase(String name, Pageable pageable);
+    Page<Recipes> findByTitleContainsIgnoreCase(String title, Pageable pageable);
 
     @Modifying
     @Query("UPDATE recipes r SET r.enabled = false WHERE r.id =:id")

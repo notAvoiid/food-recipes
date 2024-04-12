@@ -60,7 +60,7 @@ public class RecipesController {
 
 
     @GetMapping("/filter")
-    @Operation(summary = "Finds all recipes by name!", description = "Finds all recipes by name!",
+    @Operation(summary = "Finds all recipes by title!", description = "Finds all recipes by title!",
             tags = {"Recipes"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -73,15 +73,15 @@ public class RecipesController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             })
-    public ResponseEntity<PagedModel<EntityModel<RecipesResponseDTO>>> findByName(
-            @RequestParam("name") String name,
+    public ResponseEntity<PagedModel<EntityModel<RecipesResponseDTO>>> findByTitle(
+            @RequestParam("title") String title,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "12") Integer size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction
     ) {
         var sortDirection = "desc".equalsIgnoreCase(direction) ? DESC : ASC;
-        Pageable pageable = of(page, size, by(sortDirection, "name"));
-        return ResponseEntity.ok(service.findByName(name, pageable));
+        Pageable pageable = of(page, size, by(sortDirection, "title"));
+        return ResponseEntity.ok(service.findByTitle(title, pageable));
 
     }
 

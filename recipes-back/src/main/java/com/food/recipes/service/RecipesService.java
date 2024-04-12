@@ -55,10 +55,10 @@ public class RecipesService {
     }
 
     @Transactional(readOnly = true)
-    public PagedModel<EntityModel<RecipesResponseDTO>> findByName(String name, Pageable pageable) {
+    public PagedModel<EntityModel<RecipesResponseDTO>> findByTitle(String title, Pageable pageable) {
 
-        var recipesNamePages = repository.findByNameContainsIgnoreCase(name, pageable);
-        var recipesDTOPages = recipesNamePages.map(mapper::entityToDto);
+        var recipesTitlePages = repository.findByTitleContainsIgnoreCase(title, pageable);
+        var recipesDTOPages = recipesTitlePages.map(mapper::entityToDto);
         recipesDTOPages.map(r -> r.add(linkTo(methodOn(RecipesController.class).findById(r.getId())).withSelfRel()));
 
         Link link = linkTo(methodOn(RecipesController.class).findAll(
@@ -67,7 +67,7 @@ public class RecipesService {
                 "ASC"
         )).withSelfRel();
 
-        log.info("Finding all recipes by name and tags");
+        log.info("Finding all recipes by title");
 
         return assembler.toModel(recipesDTOPages, link);
     }
