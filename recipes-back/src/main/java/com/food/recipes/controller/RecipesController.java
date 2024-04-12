@@ -59,7 +59,7 @@ public class RecipesController {
     }
 
 
-    @GetMapping("/filter")
+    @GetMapping("/filter/{title}")
     @Operation(summary = "Finds all recipes by title!", description = "Finds all recipes by title!",
             tags = {"Recipes"},
             responses = {
@@ -74,7 +74,7 @@ public class RecipesController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
             })
     public ResponseEntity<PagedModel<EntityModel<RecipesResponseDTO>>> findByTitle(
-            @RequestParam("title") String title,
+            @PathVariable("title") String title,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "12") Integer size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction
