@@ -1,5 +1,6 @@
 server:
   port: ${APPLICATION_PORT}
+
 cors:
   originPatterns: http://localhost:${FRONTEND_PORT},http://localhost:${APPLICATION_PORT},https://github.com/notAvoiid,https://github.com/CeCamillo
 
@@ -12,10 +13,10 @@ spring:
       expiration: ${EXPIRATION_TIME}
 
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/recipes?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo&createDatabaseIfNotExist=true
-    username: root
-    password: admin123
+    driverClassName: ${DATABASE_DRIVER}
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
   jpa:
     hibernate:
