@@ -1,6 +1,6 @@
-package com.food.recipes.service;
+package com.food.recipes.services;
 
-import com.food.recipes.controller.RecipesController;
+import com.food.recipes.controllers.RecipesController;
 import com.food.recipes.exceptions.EntityNotFoundException;
 import com.food.recipes.mapper.RecipesMapper;
 import com.food.recipes.model.Recipes;

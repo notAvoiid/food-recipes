@@ -1,8 +1,8 @@
-package com.food.recipes.controller;
+package com.food.recipes.controllers;
 
 import com.food.recipes.model.dto.RecipesRequestDTO;
 import com.food.recipes.model.dto.RecipesResponseDTO;
-import com.food.recipes.service.RecipesService;
+import com.food.recipes.services.RecipesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
