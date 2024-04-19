@@ -10,9 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.util.Objects;
 
 @Entity(name = "recipes")
-@Table()
-@AllArgsConstructor
-@NoArgsConstructor
+@Table
 @Getter
 @Setter
 public class Recipes extends RepresentationModel<Recipes> {
@@ -31,8 +29,24 @@ public class Recipes extends RepresentationModel<Recipes> {
     @Column(name = "recipes_method_preparation", nullable = false)
     private String methodPreparation;
 
+    @Column(name = "recipes_image_url")
+    private String imageUrl;
+
     @Column(nullable = false)
-    private Boolean enabled = true;
+    private Boolean enabled;
+
+    public Recipes(String id, String title, String ingredients, String methodPreparation, String imageUrl, Boolean enabled) {
+        this.id = id;
+        this.title = title;
+        this.ingredients = ingredients;
+        this.methodPreparation = methodPreparation;
+        this.imageUrl = imageUrl;
+        this.enabled = true;
+    }
+
+    public Recipes() {
+        this.enabled = true;
+    }
 
     @Override
     public boolean equals(Object o) {
