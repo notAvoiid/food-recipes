@@ -45,7 +45,7 @@ public class AuthenticationService {
                     .token(jwtToken)
                     .build();
         } catch (DataIntegrityViolationException ex) {
-            throw new UsernameUniqueViolationException(String.format("Username '%s' já cadastrado", request.getName()));
+            throw new UsernameUniqueViolationException(String.format("Username '%s' already registered", request.getName()));
         }
     }
 
