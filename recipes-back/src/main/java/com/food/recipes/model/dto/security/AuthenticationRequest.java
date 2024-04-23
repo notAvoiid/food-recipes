@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class AuthenticationRequest {
 
     @NotBlank
-    @Email(message = "formato do e-mail está invalido", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
+    @Email(message = "Email format is incorrect", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
     private String email;
 
     @NotBlank
