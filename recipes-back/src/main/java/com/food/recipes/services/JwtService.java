@@ -1,6 +1,8 @@
 package com.food.recipes.services;
 
+import com.food.recipes.exceptions.JWTAuthenticationException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -59,12 +61,20 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        try {
+            final String username = extractUsername(token);
+            return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        } catch (ExpiredJwtException ex) {
+            throw new JWTAuthenticationException("Expired or invalid JWT Token");
+        }
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        try{
+            return extractExpiration(token).before(new Date());
+        } catch (ExpiredJwtException ex) {
+            throw new JWTAuthenticationException("Expired or invalid JWT Token");
+        }
     }
 
     private Date extractExpiration(String token) {
@@ -72,12 +82,16 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException ex) {
+            throw new JWTAuthenticationException("Expired or invalid JWT Token");
+        }
     }
 
     private Key getSignInKey() {

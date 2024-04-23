@@ -2,6 +2,7 @@ package com.food.recipes.exceptions.handler;
 
 import com.food.recipes.exceptions.EntityNotFoundException;
 import com.food.recipes.exceptions.ErrorMessage;
+import com.food.recipes.exceptions.JWTAuthenticationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -79,5 +80,14 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, new Date(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(JWTAuthenticationException.class)
+    public ResponseEntity<ErrorMessage> handleJWTAuthenticationException(JWTAuthenticationException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, new Date(), ex.getMessage()));
     }
 }
